@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 hello_word_router = APIRouter()
 
 
@@ -9,4 +10,5 @@ async def root():
 
 @hello_word_router.get("/health")
 async def health_check():
-    return {"status": "ok"}
+    # return {"status": "ok"}
+    return 405

@@ -63,6 +63,20 @@ With your virtual environment active, install all required Python packages liste
 pip install -r requirements.txt
 ```
 
+### 2.4. Run the Application Locally with Uvicorn
+Once all dependencies are installed and your virtual environment is active, you can start the FastAPI application directly using Uvicorn:
+
+```bash
+uvicorn ecore.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+ecore.main:app: This specifies the Python module (ecore.main) where your FastAPI application instance (app) is located.
+--reload: Enables live-reloading, which is very useful during development as it automatically restarts the server when code changes are detected. (Do not use in production!)
+--host 0.0.0.0: Binds the server to all available network interfaces, making it accessible from your browser.
+--port 8000: Sets the port on which the server will listen for incoming requests.
+You should see output indicating that the server has started, typically including a line like Uvicorn running on http://0.0.0.0:8000.
+
+
 # 3. Docker Deployment:
 
 Starting the ContainerDocker lets you package your application and its environment into a container, ensuring it runs consistently anywhere.
