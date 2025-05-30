@@ -20,7 +20,9 @@ async def health_check():
     # return {"status": "ok"}
     return 405
 
+
+
 @user_router.get("/login")
 async def auth(login:Login):
-    auth(login.nome,login.password)
+    
     return login

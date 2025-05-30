@@ -13,6 +13,10 @@ def sign_jwt(username):
 
     return token_response(token)
     
+def decode_jwt(token: str) -> dict:
+    try:
+        decoded_token = jwt.decode(token, SECRET, algorithms=[ALGO])
+        return decoded_token if decoded_token["expires"] >= time.time() else None
+    except:
+        return {}
 
-def auth(nome:str,password:str):
-    return 
