@@ -11,7 +11,7 @@ async def root(db: Session = Depends(get_db)):
 
     query_get_user_by_id = "SELECT * FROM users"
     result = db.execute(text(query_get_user_by_id))
-    return result.fetchall(), 200
+    return str(result.fetchall()), 200 #il risultato di fetchall va probabilmente formattato prima di essere mandato
 
 
 @user_router.post("/user")
