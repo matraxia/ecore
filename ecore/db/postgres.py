@@ -103,9 +103,9 @@ class PostgreSQLDatabase:
 # --- Example Usage ---
 if __name__ == "__main__":
     # IMPORTANT: Replace with your actual PostgreSQL credentials and database details
-    DB_NAME = "your_database_name"
-    DB_USER = "your_username"
-    DB_PASSWORD = "your_password"
+    DB_NAME = "db_test"
+    DB_USER = "postgres"
+    DB_PASSWORD = "masa"
     DB_HOST = "localhost" # or your PostgreSQL host
     DB_PORT = "5432"
 
@@ -193,3 +193,5 @@ if __name__ == "__main__":
         db_manual.close() # Manually close the connection
     else:
         print("Could not connect manually.")
+
+
