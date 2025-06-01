@@ -20,3 +20,7 @@ def decode_jwt(token: str) -> dict:
     except:
         return {}
 
+def token_response(token: str):
+    return {
+        "access_token": token
+    }
