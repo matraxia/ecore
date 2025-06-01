@@ -9,12 +9,16 @@ user_router = APIRouter(prefix='/user', tags=["user"])
 @user_router.get("/")
 async def root(db: Session = Depends(get_db)):
 
-    query_get_user_by_id = "SELECT * FROM app_user WHERE id_user = 2"
+    query_get_user_by_id = "SELECT * FROM users"
     result = db.execute(text(query_get_user_by_id))
-    return result.fetchone(), 200
+    return result.fetchall(), 200
 
 
 @user_router.post("/user")
 async def health_check():
     # return {"status": "ok"}
+    return 405
+
+@user_router.get("/login")
+async def login():
     return 405

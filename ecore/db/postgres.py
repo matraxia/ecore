@@ -97,15 +97,39 @@ class PostgreSQLDatabase:
             print(f"Error executing query: {e}")
             self.conn.rollback()  # Rollback in case of error
             return None
-
+        
+    def insert(self,table,values):
+        if not self.conn or not self.cur:
+                print("No active database connection. Please use the 'with db.connect():' block.")
+                return None
+        try:
+            delim=","
+            valuenames=delim.join(values.keys())
+            print(valuenames)
+            actualvalues=values.values()
+            actualvalues=map(lambda s:'\''+s+'\'',actualvalues)
+            actualvalues=delim.join(actualvalues)
+            print(actualvalues)
+            query=f'INSERT INTO {table} ({valuenames})'+' VALUES(%s)'%actualvalues
+            print(query)
+            self.cur.execute(query)
+            self.conn.commit()
+            print(self.cur.rowcount)
+            print(self.cur.statusmessage)
+            return 
+        except Error as e:
+            print(f"Error executing query: {e}")
+            self.conn.rollback()  # Rollback in case of error
+            return None
+        
 
 
 # --- Example Usage ---
 if __name__ == "__main__":
     # IMPORTANT: Replace with your actual PostgreSQL credentials and database details
-    DB_NAME = "db_test"
+    DB_NAME = "ecore_test"
     DB_USER = "postgres"
-    DB_PASSWORD = "masa"
+    DB_PASSWORD = "password"
     DB_HOST = "localhost" # or your PostgreSQL host
     DB_PORT = "5432"
 
