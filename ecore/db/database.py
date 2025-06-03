@@ -9,6 +9,6 @@ DATABASE_URL = "postgresql://postgres:masa@localhost:5432/db_test"
 # SQLAlchemy's create_engine by default uses QueuePool for pooling connections
 engine = create_engine(DATABASE_URL, pool_size=10, max_overflow=5, pool_pre_ping=True)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+client_db = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
