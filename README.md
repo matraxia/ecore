@@ -95,9 +95,11 @@ This command tells Docker to build an image named ecore-fastapi-service.The . in
 Once the image is built, you can start a container from it:
 
 ```bash
-docker run -d --name ecore-app-container -p 8000:8000 ecore-fastapi-service
+docker run -d --name ecore-app-container -p 8000:8000 --env-file ./.env ecore-fastapi-service
 ```
--d: Runs the container in detached mode (in the background).--name ecore-app-container: Gives your running container a friendly name.-p 8000:8000: This is crucial! It maps port 8000 on your computer to port 8000 inside the container.ecore-fastapi-service: The name of the Docker image you want to run.
+-d: Runs the container in detached mode (in the background).--name ecore-app-container: Gives your running container a friendly name.-p 8000:8000: It maps port 8000 on your computer to port 8000 inside the container.ecore-fastapi-service: The name of the Docker image you want to run. --env-file ./.env: It tells Docker to read environment variables from the specified .env file and set them inside the container. Make sure the path to your .env file is correct relative to where you run the docker run command.
+
+
 
 ### 3.3. Verify Container Status
 
