@@ -21,12 +21,16 @@ async def health_check():
     return 405
 
 @user_router.get("/login")
-async def login(token):
-    if(auth.decode_jwt(token)):
+async def login(token,db: Session = Depends(get_db)):
+    
+    query= 'SELECT email FROM users'
+    result = db.execute(text(query))
+    
+    if(auth.validate_ecore_login(token, result.fetchall())):
         return 200
     else: 
         return 404
 
 @user_router.post("/signup")
-async def login():
+async def signup():
     return 405
