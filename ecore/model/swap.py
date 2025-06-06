@@ -1,24 +1,25 @@
+from sqlalchemy import Column, Integer, DateTime, String
 from datetime import datetime
-from enum import Enum
 
-from pydantic import BaseModel
+from sqlalchemy.dialects.postgresql import JSONB
 
+# Import Base from your database setup
+from ecore.db.database import Base # Adjust the import path based on your project structure
+# from .schemas import SwapStatus # Import the Pydantic Enum to use in SQLAlchemy's Enum type
 
-class SwapStatus(Enum):
-    PENDING = "pending"
-    ACCEPTED = "accepted"
-    REJECTED = "rejected"
-    COMPLETED = "completed"
-    CANCELLED = "cancelled"
+# SQLAlchemy ORM model for the 'swaps' table
+class Swap(Base):
+    __tablename__ = "swaps" # The name of the table in your PostgreSQL database
 
-
-class Swap(BaseModel):
-    id_swap: int
-    id_item: int
-    id_user_giver: int
-    id_user_taker: int
-    date_swap: datetime
-    status: SwapStatus
-
+    # Primary key, typically auto-incremented by the database
+    id_swap = Column(Integer, primary_key=True, index=True)
+    id_item = Column(String, nullable=False)
+    id_user_giver = Column(String, nullable=False)
+    id_user_taker = Column(String, nullable=False)
+    # date_swap defaults to the current UTC time if not provided
+    date_swap = Column(DateTime, default=datetime.utcnow, nullable=False)
+    item_metadata = Column(JSONB, nullable=False, default={})
 
 
+    def __repr__(self):
+        return f"<Swap(id_swap={self.id_swap}, status='{self.status}')>"

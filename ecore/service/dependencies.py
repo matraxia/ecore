@@ -1,8 +1,8 @@
 from typing import Generator
-from ecore.db.database import SessionLocal
+from ecore.db.database import client_db
 
 def get_db() -> Generator:
-    db = SessionLocal()
+    db = client_db()
     try:
         yield db
     finally:

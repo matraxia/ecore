@@ -21,19 +21,7 @@ To set up and run this project, you'll need the following software installed on 
 
 Follow these steps to prepare your local development environment and install the necessary dependencies.
 
-### 2.1. Repository Setup
-
-1.  **Clone the repository** (if you're using Git) or extract your project archive:
-    ```bash
-    git clone [repository-url]
-    ```
-2.  **Navigate into your project's root directory:**
-    ```bash
-    cd /path/to/your/ecore_project_root/ecore
-    ```
-    (Ensure you're in the directory where your `Dockerfile` and `requirements.txt` are located.)
-
-### 2.2. Python Virtual Environment Setup
+### 2.1. Python Virtual Environment Setup
 
 Using a **virtual environment** is a best practice to keep your project's dependencies isolated from other Python projects.
 
@@ -55,7 +43,7 @@ Using a **virtual environment** is a best practice to keep your project's depend
         .\venv\Scripts\Activate.ps1
         ```
 
-### 2.3. Install Project Dependencies
+### 2.2. Install Project Dependencies
 
 With your virtual environment active, install all required Python packages listed in `requirements.txt`:
 
@@ -63,7 +51,7 @@ With your virtual environment active, install all required Python packages liste
 pip install -r requirements.txt
 ```
 
-### 2.4. Run the Application Locally with Uvicorn
+### 2.3. Run the Application Locally with Uvicorn
 Once all dependencies are installed and your virtual environment is active, you can start the FastAPI application directly using Uvicorn:
 
 ```bash
@@ -75,6 +63,13 @@ ecore.main:app: This specifies the Python module (ecore.main) where your FastAPI
 --host 0.0.0.0: Binds the server to all available network interfaces, making it accessible from your browser.
 --port 8000: Sets the port on which the server will listen for incoming requests.
 You should see output indicating that the server has started, typically including a line like Uvicorn running on http://0.0.0.0:8000.
+
+
+# Modifying Environment Variables
+To change the JWT_SECRET_KEY (or any other setting), you have two easy ways:
+
+Edit envs/.env: For local work, just open the envs/.env file and change the JWT_SECRET_KEY value directly inside it.
+Set System Variables:
 
 
 # 3. Docker Deployment:
@@ -95,9 +90,11 @@ This command tells Docker to build an image named ecore-fastapi-service.The . in
 Once the image is built, you can start a container from it:
 
 ```bash
-docker run -d --name ecore-app-container -p 8000:8000 ecore-fastapi-service
+docker run -d --name ecore-app-container -p 8000:8000 --env-file ./.env ecore-fastapi-service
 ```
--d: Runs the container in detached mode (in the background).--name ecore-app-container: Gives your running container a friendly name.-p 8000:8000: This is crucial! It maps port 8000 on your computer to port 8000 inside the container.ecore-fastapi-service: The name of the Docker image you want to run.
+-d: Runs the container in detached mode (in the background).--name ecore-app-container: Gives your running container a friendly name.-p 8000:8000: It maps port 8000 on your computer to port 8000 inside the container.ecore-fastapi-service: The name of the Docker image you want to run. --env-file ./.env: It tells Docker to read environment variables from the specified .env file and set them inside the container. Make sure the path to your .env file is correct relative to where you run the docker run command.
+
+
 
 ### 3.3. Verify Container Status
 
