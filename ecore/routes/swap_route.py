@@ -88,7 +88,7 @@ async def get_user_items_given_count(
     "/items_taken_count/{user_id}/",
     response_model=SwapTakenCount
 )
-async def get_user_items_given_count(
+async def get_user_items_taken_count(
     # user_id is now a string in the path
     user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),
     token_payload: dict[str, Any] = Depends(verify_token),
@@ -107,5 +107,5 @@ async def get_user_items_given_count(
 
     return {
         "user_id": user_id,
-        "items_given_count": item_count
+        "items_taken_count": item_count
     }
