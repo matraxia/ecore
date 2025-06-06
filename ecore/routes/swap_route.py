@@ -60,7 +60,7 @@ async def create_swap(
 # --- NEW API Endpoint for Item Count by User (Updated for string IDs) ---
 @swap_router.get(
     "/items_given_count/{user_id}/",
-    response_model=SwapGivenCount,
+    response_model=SwapGivenCount
 )
 async def get_user_items_given_count(
     # user_id is now a string in the path
@@ -86,7 +86,8 @@ async def get_user_items_given_count(
 
 @swap_router.get(
     "/items_taken_count/{user_id}/",
-    response_model=SwapTakenCount,)
+    response_model=SwapTakenCount
+)
 async def get_user_items_given_count(
     # user_id is now a string in the path
     user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),
