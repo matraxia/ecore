@@ -8,7 +8,7 @@ from ecore.settings import S
 
 # --- Configuration ---
 SECRET_KEY = S.SECRET_KEY
-ALGORITHM = "HS256"  # Must match the algorithm used to sign the token
+ALGORITHM = S.SECRET_ALGORITHM
 
 
 # --- Dependency Function for Token Validation ---

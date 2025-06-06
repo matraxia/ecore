@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
 
     SECRET_KEY: str = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuaWNrbmFtZSI6Ik1hIE0iLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzYxNjE2MCwiZXhwIjoxNzE3NjE5NzYwfQ.YOUR_ACTUAL_SIGNATURE_HERE'
+    SECRET_ALGORITHM: str = "HS256"
 
     class Config:
         env_file = "envs/.env"

@@ -1,6 +1,7 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status, Path
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from datetime import datetime
 
@@ -58,7 +59,7 @@ async def create_swap(
 
 
 # --- NEW API Endpoint for Item Count by User (Updated for string IDs) ---
-@swap_router.get("/users/{user_id}/items_given_count/")
+@swap_router.get("/items_given_count/{user_id}/")
 async def get_user_items_given_count(
     # user_id is now a string in the path
     user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),
@@ -66,16 +67,36 @@ async def get_user_items_given_count(
     db: Session = Depends(get_db)
 ):
 
-
-    # Query the database to count items owned by the specified user_id (string comparison)
-    item_count = db.execute(
-        """
+    query_item_count = """
         SELECT COUNT(*)
-        FROM swap
+        FROM swaps
         WHERE id_user_giver = :user_id
-        """,
-        {"user_id": user_id}
-    ).fetchone()[0]
+        """
+    # Query the database to count items owned by the specified user_id (string comparison)
+    item_count = db.execute(text(query_item_count), {"user_id": user_id}).fetchone()[0]
+
+    # User existence check (string comparison)
+
+    return {
+        "user_id": user_id,
+        "items_given_count": item_count
+    }
+
+@swap_router.get("/items_taken_count/{user_id}/")
+async def get_user_items_given_count(
+    # user_id is now a string in the path
+    user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),
+    token_payload: dict[str, Any] = Depends(verify_token),
+    db: Session = Depends(get_db)
+):
+
+    query_item_count = """
+        SELECT COUNT(*)
+        FROM swaps
+        WHERE id_user_taker = :user_id
+        """
+    # Query the database to count items owned by the specified user_id (string comparison)
+    item_count = db.execute(text(query_item_count), {"user_id": user_id}).fetchone()[0]
 
     # User existence check (string comparison)
 
