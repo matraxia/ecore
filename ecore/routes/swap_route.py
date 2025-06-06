@@ -8,8 +8,7 @@ from datetime import datetime
 from ecore.auth.auth_handler import verify_token
 from ecore.service.dependencies import get_db
 from ecore.model.swap import Swap as DBSwap # Alias to avoid naming conflict with Pydantic Swap
-from ecore.schema.swap_schema import SwapCreate, SwapResponse #SwapStatus # Pydantic models
-
+from ecore.schema.swap_schema import SwapCreate, SwapResponse, SwapGivenCount, SwapTakenCount
 
 # Create an API router for swap-related endpoints
 swap_router = APIRouter(prefix="/swap", tags=["Swap"])
@@ -59,7 +58,10 @@ async def create_swap(
 
 
 # --- NEW API Endpoint for Item Count by User (Updated for string IDs) ---
-@swap_router.get("/items_given_count/{user_id}/")
+@swap_router.get(
+    "/items_given_count/{user_id}/",
+    response_model=SwapGivenCount,
+)
 async def get_user_items_given_count(
     # user_id is now a string in the path
     user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),
@@ -82,7 +84,9 @@ async def get_user_items_given_count(
         "items_given_count": item_count
     }
 
-@swap_router.get("/items_taken_count/{user_id}/")
+@swap_router.get(
+    "/items_taken_count/{user_id}/",
+    response_model=SwapTakenCount,)
 async def get_user_items_given_count(
     # user_id is now a string in the path
     user_id: str = Path(..., description="The ID (string) of the user whose items count is requested."),

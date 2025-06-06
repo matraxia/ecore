@@ -24,3 +24,21 @@ class SwapResponse(BaseModel):
     # This allows Pydantic to read data directly from SQLAlchemy ORM models.
     class Config:
         from_attributes = True
+
+
+class SwapGivenCount(BaseModel):
+    user_id: str
+    items_given_count: int
+
+    # This allows Pydantic to read data directly from SQLAlchemy ORM models.
+    class Config:
+        from_attributes = True
+
+
+class SwapTakenCount(BaseModel):
+    user_id: str
+    items_taken_count: int
+
+    # This allows Pydantic to read data directly from SQLAlchemy ORM models.
+    class Config:
+        from_attributes = True
